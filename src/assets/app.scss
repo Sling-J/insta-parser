@@ -6,6 +6,7 @@ body {
    font-family: 'Montserrat', sans-serif;
    -webkit-tap-highlight-color: transparent;
    background-color: #F5F7FA;
+   color: #212529;
 }
 
 main {
@@ -19,7 +20,7 @@ main {
 }
 
 .wrapper {
-   max-width: 1085px;
+   max-width: 1170px;
    margin: 0 auto;
    padding: 26px;
 }
@@ -106,6 +107,10 @@ main {
    }
 }
 
+.user-img {
+   border: 5px solid #F5F7FA;
+}
+
 .gutters-sm {
    margin-right: -8px;
    margin-left: -8px;
@@ -129,12 +134,128 @@ main {
    box-shadow: none!important;
 }
 
+.search-user-form {
+   .search-user-form-label {
+      @include centering;
+      border-radius: .25rem 0 0 .25rem;
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      min-width: 42px;
+      height: 42px;
+      margin: 0;
+   }
+
+   .search-user-form-input {
+      border: 1px solid #ced4da;
+      border-right: none;
+      border-left: none;
+      padding: 0 16px;
+      color: #212529;
+      outline: none;
+      height: 42px;
+      width: 100%;
+   }
+
+   .search-user-form-button {
+      border-radius: 0 .25rem .25rem 0;
+      background-color: #007bff;
+      transition: all 0.2s;
+      padding: 0;
+      font-size: 14px;
+      height: 42px;
+      outline: none;
+      color: #fff;
+      border: none;
+
+      &:enabled {
+         &:hover {
+            background-color: #0069d9;
+         }
+      }
+
+      &:disabled {
+         opacity: 0.3;
+         cursor: not-allowed;
+      }
+
+      .search-user-form-link {
+         @include centering;
+         padding: 0 24px;
+         color: #fff;
+         width: 100%;
+         height: 100%;
+
+         &:hover {
+            text-decoration: none;
+         }
+      }
+   }
+}
+
+.gallery {
+   .gallery-item {
+      width: 96px;
+      margin-right: 12px;
+
+      &:last-child {
+         margin-right: 0;
+      }
+
+      .gallery-item__img {
+         box-shadow: 0 8px 32px -16px rgba(53,66,91,0.2);
+         margin-bottom: 8px;
+         border-radius: 8px;
+         position: relative;
+         overflow: hidden;
+         min-width: 96px;
+         height: 96px;
+         width: 96px;
+
+         img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            object-fit: cover;
+         }
+      }
+
+      .gallery-item__icon {
+         display: flex;
+         flex-wrap: wrap;
+         align-items: center;
+
+         .gallery-item-icon__item {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+            margin-bottom: 4px;
+            color: #72809D;
+
+            span {
+               font-size: 10px;
+               font-weight: 500;
+            }
+
+            svg {
+               fill: #72809D;
+               width: 16px;
+               margin-right: 0.2rem;
+               vertical-align: middle;
+            }
+         }
+      }
+   }
+}
+
 .audition {
    .audition-section {
       margin-bottom: 42px;
       
       .audition-item {
          width: 350px;
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
 
          .audition-item__info {
             margin-top: 20px;
