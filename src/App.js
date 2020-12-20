@@ -18,7 +18,10 @@ const options = {
 
 const App = () => {
    const [searchValue, setSearchValue] = useState('')
-   const [isLoading, setIsLoading] = useState(false)
+   const [loadingStatus, setLoadingStatus] = useState({
+      isLoading: false,
+      text: ''
+   })
    const [userInfo, setUserInfo] = useState({})
    const [locationBarData, setLocationBarData] = useState([])
    const [cityBarData, setCityBarData] = useState([])
@@ -135,7 +138,10 @@ const App = () => {
    }
 
    const loadUserInfo = username => {
-      setIsLoading(true)
+      setLoadingStatus({
+         text: '',
+         isLoading: true,
+      })
 
       fetch('http://134.122.48.238:8000/api/profiles/followers-metricks/', {
          method: 'POST',
@@ -146,14 +152,36 @@ const App = () => {
             username: username
          })
       })
-         .then(res => res.json())
+         .then(res => {
+            if (res.status === 200) {
+               return res.json()
+            } else if (res.status === 205) {
+               setLoadingStatus({
+                  text: 'Производится аналитика пользователя, попробуйте через пару минут',
+                  isLoading: false
+               })
+            } else if (res.status === 404) {
+               setLoadingStatus({
+                  text: 'Пользователь не найден!',
+                  isLoading: false
+               })
+            }
+         })
          .then(data => {
-            setIsLoading(false)
-            setUserInfo(data)
+            if (data) {
+               setUserInfo(data)
+               setLoadingStatus({
+                  text: '',
+                  isLoading: false
+               })
+            }
          })
          .catch(() => {
-            setIsLoading(false)
             setUserInfo([])
+            setLoadingStatus({
+               text: '',
+               isLoading: false
+            })
          })
    }
 
@@ -180,9 +208,15 @@ const App = () => {
                </form>
             </div>
 
-            {isLoading ? (
-               <div className="d-flex justify-content-center">
-                  <div className="spinner-border text-primary" role="status"/>
+            {loadingStatus.isLoading || loadingStatus.text.length !== 0 ? (
+               <div className="loading">
+                  {loadingStatus.isLoading && (
+                     <div className="spinner-border text-primary" role="status"/>
+                  )}
+
+                  {loadingStatus.text.length !== 0 && (
+                     <p className="mt-3">{loadingStatus.text}</p>
+                  )}
                </div>
             ) : Object.keys(userInfo).length !== 0 ? (
                <div>

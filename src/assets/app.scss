@@ -19,6 +19,13 @@ main {
    display: flex;
 }
 
+.loading {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+
 .wrapper {
    max-width: 1170px;
    margin: 0 auto;
