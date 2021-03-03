@@ -154,13 +154,19 @@ const App = () => {
       })
          .then(res => {
             if (res.status === 200) {
+               setLoadingStatus({
+                  text: '',
+                  isLoading: false
+               })
                return res.json()
             } else if (res.status === 205) {
+               setUserInfo({})
                setLoadingStatus({
                   text: 'Производится аналитика пользователя, попробуйте через пару минут',
                   isLoading: false
                })
             } else if (res.status === 404) {
+               setUserInfo({})
                setLoadingStatus({
                   text: 'Пользователь не найден!',
                   isLoading: false
@@ -170,10 +176,6 @@ const App = () => {
          .then(data => {
             if (data) {
                setUserInfo(data)
-               setLoadingStatus({
-                  text: '',
-                  isLoading: false
-               })
             }
          })
          .catch(() => {
@@ -251,7 +253,7 @@ const App = () => {
                               </div>
                               <p>
                                  <small>Подписок: <strong>{userInfo.following_count}</strong> |
-                                    Подписок: <strong>{userInfo.media_count}</strong></small>
+                                    Публикации: <strong>{userInfo.media_count}</strong></small>
                               </p>
                            </div>
                         </div>
